@@ -30,6 +30,7 @@ class Account {
 		return balance;
 	}
 }
+//CHECKINGACCOUNT
 package com.jsp.project;
 
 class CheckingAccount extends Account {
@@ -54,6 +55,7 @@ class CheckingAccount extends Account {
 		return false;
 	}
 }
+//CURRENTACCOUNT
 package com.jsp.project;
 
 class CurrentAccount extends Account {
@@ -75,6 +77,7 @@ class CurrentAccount extends Account {
 	        }
 	    }
 	}
+//SAVINGACCOUNT
 package com.jsp.project;
 
 class SavingAccount extends Account {
@@ -90,6 +93,7 @@ class SavingAccount extends Account {
 	}
 
 }
+//MAIN PROGRAM
 package com.jsp.project;
 
 public class TestProgram {
