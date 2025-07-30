@@ -1,0 +1,116 @@
+package com.jsp.project;
+
+class Account {
+	protected double balance;
+	public Account(double initialbalance) {
+		if(initialbalance >=0.0) {
+			balance=initialbalance;
+		}
+		else {
+			balance=0.0;
+			System.out.println("Error :the initial balance was invalid");
+		}
+	}
+	//deposit money(credit)
+	public void credit(double amount) {
+		balance += amount;
+	}
+	//withdraw for debit
+	public boolean debit(double amount) {
+		if(balance > amount) {
+			System.out.println("Debit amount exceeded account balance");
+			return false;
+		}
+		else {
+			balance -= amount;
+			return true;
+		}
+	}
+	public double getBalance() {
+		return balance;
+	}
+}
+package com.jsp.project;
+
+class CheckingAccount extends Account {
+	private double Transactionfees;
+	public CheckingAccount(double initialbalance,double Transactionfees) {
+		super(initialbalance);
+		this.Transactionfees=Transactionfees;
+	}
+	//overridden in credit function
+	@ Override
+	public void credit(double amount) {
+		super.credit(amount);
+		balance-=Transactionfees;
+	}
+	//overridden in debit funtion
+	@ Override
+	public boolean debit(double amount) {
+		if(super.debit(amount)){
+		balance-=Transactionfees;
+		return true;
+		}
+		return false;
+	}
+}
+package com.jsp.project;
+
+class CurrentAccount extends Account {
+	private double overdraftlimit;
+	//construtor
+	public CurrentAccount(double initialbalance,double overdraftlimit) {
+		super(initialbalance);
+		this.overdraftlimit=overdraftlimit;
+	}
+		 // Overridden debit method (allows overdraft)
+	    @Override
+	    public boolean debit(double amount) {
+	        if (balance - amount >= -overdraftlimit) {
+	            balance -= amount;
+	            return true;
+	        } else {
+	            System.out.println("Debit amount exceeded overdraft limit.");
+	            return false;
+	        }
+	    }
+	}
+package com.jsp.project;
+
+class SavingAccount extends Account {
+	private double interestRate;
+    //constructor
+	public SavingAccount(double initialbalance,double interestRate ) {
+		super(initialbalance);
+		this.interestRate=interestRate;
+	}
+	//calculate
+	public double calculateinterest() {
+		return balance*interestRate;
+	}
+
+}
+package com.jsp.project;
+
+public class TestProgram {
+	public static void main(String[] args) {
+		SavingAccount saving=new SavingAccount(2000, 100);
+		System.out.println("saving Account balance:"+saving.getBalance());
+		
+		double interest=saving.calculateinterest();
+		saving.credit(interest);
+		System.out.println("balance after adding interest:"+saving.getBalance());
+		
+		CheckingAccount checking=new CheckingAccount(1000, 200);
+		checking.credit(200);
+		checking.debit(200);
+		System.out.println("checking Account balance:"+checking.getBalance());
+		
+		CurrentAccount current=new CurrentAccount(1000, 100);
+		current.credit(200);
+		current.debit(500);
+		System.out.println("current Account balance:"+current.getBalance());
+	}
+}
+
+ 
