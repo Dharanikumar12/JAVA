@@ -45,6 +45,25 @@ class BankAccount {
     }
 }
 package Com.project;
+
+public class SavingsAccount extends BankAccount {
+
+    private double interestRate = 5.0;
+
+    public SavingsAccount(String accountNumber, String accountHolder, double balance) {
+        super(accountNumber, accountHolder, balance);
+    }
+
+    public void addInterest() {
+        double interest = balance * interestRate / 100;
+        balance += interest;
+        transactionHistory.add("Interest added: " + interest);
+        System.out.println("Interest added successfully.");
+    }
+}
+
+
+package Com.project;
 import java.util.Scanner;
 public class BasicBankingSystem {
 
