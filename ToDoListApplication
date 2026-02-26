@@ -1,0 +1,87 @@
+package Com.project;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class task{
+	String tittle;
+	boolean isCompleted;
+	task(String title) {
+		this.tittle=title;
+		this.isCompleted=isCompleted;	
+	}
+	void markCompleted() {
+		isCompleted=true;
+	}
+	void displayTask(int index) {
+        String status = isCompleted ? "Completed" : "Pending";
+        System.out.println(index + ". " + tittle + " - " + status);
+    }
+}
+
+public class ToDoListApplication {
+	public static void main(String[] args) {
+
+        ArrayList<task> taskList = new ArrayList<>();
+        Scanner sc = new Scanner(System.in);
+        int choice;
+
+        do {
+            System.out.println("\n===== TO-DO LIST MENU =====");
+            System.out.println("1. Add Task");
+            System.out.println("2. Mark Task as Completed");
+            System.out.println("3. Display Tasks");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+            choice = sc.nextInt();
+            sc.nextLine(); // Clear buffer
+            switch (choice) {
+                // Add Task
+                case 1:
+                    System.out.print("Enter Task Title: ");
+                    String title = sc.nextLine();
+                    taskList.add(new task(title));
+                    System.out.println("Task Added Successfully!");
+                    break;
+
+                // Mark Task Completed
+                case 2:
+                    if (taskList.isEmpty()) {
+                        System.out.println("No tasks available.");
+                    } else {
+                        System.out.print("Enter Task Number to Complete: ");
+                        int num = sc.nextInt();
+
+                        if (num > 0 && num <= taskList.size()) {
+                            taskList.get(num - 1).markCompleted();
+                            System.out.println("Task Marked as Completed!");
+                        } else {
+                            System.out.println("Invalid Task Number!");
+                        }
+                    }
+                    break;
+                // Display Tasks
+                case 3:
+                    if (taskList.isEmpty()) {
+                        System.out.println("No tasks available.");
+                    } else {
+                        System.out.println("\nYour Tasks:");
+                        for (int i = 0; i < taskList.size(); i++) {
+                            taskList.get(i).displayTask(i + 1);
+                        }
+                    }
+                    break;
+
+                case 4:
+                    System.out.println("Application Closed.");
+                    break;
+
+                default:
+                    System.out.println("Invalid Choice!");
+            }
+
+        } while (choice != 4);
+
+        sc.close();
+    }
+}
