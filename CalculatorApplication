@@ -1,0 +1,78 @@
+package Com.project;
+
+import java.util.Scanner;
+
+public class CalculatorApplication {
+
+    public static double add(double a, double b) {
+        return a + b;
+    }
+
+    public static double subtract(double a, double b) {
+        return a - b;
+    }
+
+    public static double multiply(double a, double b) {
+        return a * b;
+    }
+
+    public static double division(double a, double b) {
+        if (b == 0) {
+            throw new ArithmeticException("Division by zero is not allowed");
+        }
+        return a / b;
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        int choice;
+
+        do {
+            System.out.println("\n======== MENU =========");
+            System.out.println("1. Addition");
+            System.out.println("2. Subtraction");
+            System.out.println("3. Multiplication");
+            System.out.println("4. Division");
+            System.out.println("5. Exit");
+            System.out.print("Enter your choice: ");
+
+            choice = sc.nextInt();
+
+            if (choice >= 1 && choice <= 4) {
+
+                System.out.print("Enter first number: ");
+                double a = sc.nextDouble();
+
+                System.out.print("Enter second number: ");
+                double b = sc.nextDouble();
+
+                try {
+                    switch (choice) {
+                        case 1:
+                            System.out.println("Result: " + add(a, b));
+                            break;
+
+                        case 2:
+                            System.out.println("Result: " + subtract(a, b));
+                            break;
+
+                        case 3:
+                            System.out.println("Result: " + multiply(a, b));
+                            break;
+
+                        case 4:
+                            System.out.println("Result: " + division(a, b));
+                            break;
+                    }
+                } catch (ArithmeticException e) {
+                    System.out.println("Error: " + e.getMessage());
+                }
+            }
+
+        } while (choice != 5);
+
+        System.out.println("Calculator Closed");
+        sc.close();
+    }
+}
