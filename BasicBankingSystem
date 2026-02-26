@@ -1,0 +1,122 @@
+package Com.project;
+import java.util.ArrayList;
+
+class BankAccount {
+    protected String accountNumber;
+    protected String accountHolder;
+    protected double balance;
+    protected ArrayList<String> transactionHistory;
+
+    public BankAccount(String accountNumber, String accountHolder, double balance) {
+        this.accountNumber = accountNumber;
+        this.accountHolder = accountHolder;
+        this.balance = balance;
+        transactionHistory = new ArrayList<>();
+        transactionHistory.add("Account created with balance: " + balance);
+    }
+
+    public void deposit(double amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Deposit amount must be positive");
+        }
+        balance += amount;
+        transactionHistory.add("Deposited: " + amount);
+        System.out.println("Amount deposited successfully.");
+    }
+
+    public void withdraw(double amount) {
+        if (amount > balance) {
+            throw new IllegalArgumentException("Insufficient balance");
+        }
+        balance -= amount;
+        transactionHistory.add("Withdrawn: " + amount);
+        System.out.println("Amount withdrawn successfully.");
+    }
+
+    public void checkBalance() {
+        System.out.println("Current Balance: " + balance);
+    }
+
+    public void showTransactionHistory() {
+        System.out.println("Transaction History:");
+        for (String transaction : transactionHistory) {
+            System.out.println(transaction);
+        }
+    }
+}
+package Com.project;
+import java.util.Scanner;
+public class BasicBankingSystem {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Enter Account Number:");
+        String accNo = sc.nextLine();
+
+        System.out.println("Enter Account Holder Name:");
+        String name = sc.nextLine();
+
+        System.out.println("Enter Initial Balance:");
+        double balance = sc.nextDouble();
+
+        SavingsAccount account = new SavingsAccount(accNo, name, balance);
+
+        int choice;
+
+        do {
+            System.out.println("\n--- Banking Menu ---");
+            System.out.println("1. Deposit");
+            System.out.println("2. Withdraw");
+            System.out.println("3. Check Balance");
+            System.out.println("4. Add Interest");
+            System.out.println("5. Transaction History");
+            System.out.println("6. Exit");
+            System.out.print("Choose option: ");
+
+            choice = sc.nextInt();
+
+            try {
+                switch (choice) {
+                    case 1:
+                        System.out.print("Enter deposit amount: ");
+                        double dep = sc.nextDouble();
+                        account.deposit(dep);
+                        break;
+
+                    case 2:
+                        System.out.print("Enter withdrawal amount: ");
+                        double wd = sc.nextDouble();
+                        account.withdraw(wd);
+                        break;
+
+                    case 3:
+                        account.checkBalance();
+                        break;
+
+                    case 4:
+                        account.addInterest();
+                        break;
+
+                    case 5:
+                        account.showTransactionHistory();
+                        break;
+
+                    case 6:
+                        System.out.println("Thank you for using Banking System!");
+                        break;
+
+                    default:
+                        System.out.println("Invalid option!");
+                }
+            } catch (Exception e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+
+        } while (choice != 6);
+
+        sc.close();
+    }
+}
+
+
